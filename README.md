@@ -1,0 +1,1 @@
+# ej2-angular-scheduler-crud-graphql-adaptor
