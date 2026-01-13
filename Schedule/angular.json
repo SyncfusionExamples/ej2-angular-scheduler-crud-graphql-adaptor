@@ -107,8 +107,5 @@
       }
     }
   },
-  "defaultProject": "ej2-angular-app",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "ej2-angular-app"
 }
