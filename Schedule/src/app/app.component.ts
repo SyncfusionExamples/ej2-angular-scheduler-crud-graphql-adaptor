@@ -9,17 +9,19 @@ import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, 
   providers: [DayService, WeekService, WorkWeekService, MonthService, AgendaService]
 })
 export class AppComponent {
+
   @ViewChild('scheduleObj') scheduleObj: ScheduleComponent;
   public dataSource: DataManager;
   public eventSettings: EventSettingsModel;
+  title: string;
   ngOnInit(): void {
     this.dataSource = new DataManager({
       url: 'http://localhost:4400/',
       adaptor: new GraphQLAdaptor({
         response: {
-            result: 'getEvents.result',
+          result: 'getEvents.result',
         },
-        query:`query getEvents($datamanager: DataManager) {
+        query: `query getEvents($datamanager: DataManager) {
           getEvents(datamanager: $datamanager) {
               result { Id, Subject, StartTime, EndTime, Location, IsAllDay, RecurrenceRule, StartTimezone, EndTimezone }
           }
@@ -37,5 +39,5 @@ export class AppComponent {
     });
     this.eventSettings = { dataSource: this.dataSource };
   }
-  public selectedDate: Date = new Date(2021, 1, 11);
+  public selectedDate: Date = new Date(2026, 1, 11);
 }
