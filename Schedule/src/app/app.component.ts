@@ -18,7 +18,7 @@ export class AppComponent {
       url: 'http://localhost:4400/',
       adaptor: new GraphQLAdaptor({
         response: {
-        result: 'getEvents.result',
+            result: 'getEvents.result',
         },
         query:`query getEvents($datamanager: DataManager) {
           getEvents(datamanager: $datamanager) {
