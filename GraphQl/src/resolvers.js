@@ -26,16 +26,16 @@ const resolvers = {
             }
           }
           if (existingIndex >= 0) {
-            const t = eventsData[existingIndex];
-            if ('Id' in order) t.Id = order.Id;
-            if ('Subject' in order) t.Subject = order.Subject;
-            if ('StartTime' in order) t.StartTime = order.StartTime;
-            if ('EndTime' in order) t.EndTime = order.EndTime;
-            if ('Location' in order) t.Location = order.Location;
-            if ('IsAllDay' in order) t.IsAllDay = order.IsAllDay;
-            if ('RecurrenceRule' in order) t.RecurrenceRule = order.RecurrenceRule;
-            if ('StartTimezone' in order) t.StartTimezone = order.StartTimezone;
-            if ('EndTimezone' in order) t.EndTimezone = order.EndTimezone;
+            const target = eventsData[existingIndex];
+            if ('Id' in order) target.Id = order.Id;
+            if ('Subject' in order) target.Subject = order.Subject;
+            if ('StartTime' in order) target.StartTime = order.StartTime;
+            if ('EndTime' in order) target.EndTime = order.EndTime;
+            if ('Location' in order) target.Location = order.Location;
+            if ('IsAllDay' in order) target.IsAllDay = order.IsAllDay;
+            if ('RecurrenceRule' in order) target.RecurrenceRule = order.RecurrenceRule;
+            if ('StartTimezone' in order) target.StartTimezone = order.StartTimezone;
+            if ('EndTimezone' in order) target.EndTimezone = order.EndTimezone;
           } else {
             eventsData.push(order);
           }
@@ -52,7 +52,7 @@ const resolvers = {
             }
           }
           if (!target) {
-            console.warn('Change skipped: app not found for Id:', order && order.Id);
+            console.log('Change skipped: app not found for Id:', order && order.Id);
             return;
           }
           if ('Id' in order) target.Id = order.Id;
@@ -69,16 +69,16 @@ const resolvers = {
       if (deleted && deleted.length > 0) {
         console.log('deleted: ' + deleted.length);
         deleted.forEach((order) => {
-          const idCandidate = (order && typeof order === 'object') ? order.Id : order;
+          const eventID = (order && typeof order === 'object') ? order.Id : order;
           let idx = -1;
           for (let i = 0; i < eventsData.length; i++) {
-            if (sameId(eventsData[i].Id, idCandidate)) {
+            if (sameId(eventsData[i].Id, eventID)) {
               idx = i;
               break;
             }
           }
           if (idx === -1) {
-            console.warn("Delete skipped: app not found.", idCandidate);
+            console.log("Delete skipped: app not found.", eventID);
             return;
           }
           eventsData.splice(idx, 1);
