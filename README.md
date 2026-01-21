@@ -10,7 +10,7 @@ This repository contains a sample full-stack application demonstrating how to sh
 ## Prerequisites
 - Node.js (>= 20.19)
 - npm (>= 7.0)
-- Angular CLI (= 17)
+- Angular CLI (== 17.0.0)
 - Basic familiarity with Angular and GraphQl Adaptor
 
 ## Project Structure
