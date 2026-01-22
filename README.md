@@ -11,44 +11,7 @@ This repository contains a sample full-stack application demonstrating how to sh
 - Node.js (>= 20.19)
 - npm (>= 7.0)
 - Angular CLI (== 17.0.0)
-- Basic familiarity with Angular and GraphQl Adaptor
 
-## Project Structure
-```
-├── README.md                           # This guide
-├── GraphQl                             # Adaptor
-│   ├── build    
-│   │    ├── index.js    
-│   │    ├── index.map  
-│   ├── src
-│   │    ├── db.js                      # Scheduler Events Data
-│   │    ├── resolver.js                # GraphQl Query       
-│   │    ├── schema.graphql             # Defines the GraphQL schema
-│   ├── package.json                     
-├── Schedule                             # Frontend
-│    ├── src
-│    │    ├── app                        # Contains Angular components, modules , services and routing
-│    │    │    ├── app-routing-module.ts
-│    │    │    ├── app.component.html    # define Scheduler Component
-│    │    │    ├── app.component.scss
-│    │    │    ├── app.component.spec.ts
-│    │    │    ├── app.component.ts
-│    │    │    ├── app.module.ts
-│    ├── environments
-│    │    ├── environment.prod.ts
-│    │    ├── environment.ts       
-│    ├── index.html                       # Main HTML Page for load Angular Scheduler
-│    ├── main.ts                      
-│    ├── polyfills.ts
-│    ├── styles.scss
-│    ├── test.ts
-│    ├── angular.json
-│    ├── package.json
-├─────── tsconfig.json
-
-
-
-```
 ## Setup
 
 ### Cloning the repository
