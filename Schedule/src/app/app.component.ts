@@ -12,6 +12,7 @@ export class AppComponent {
   @ViewChild('scheduleObj') scheduleObj: ScheduleComponent;
   public dataSource: DataManager;
   public eventSettings: EventSettingsModel;
+  title: string;
   ngOnInit(): void {
     this.dataSource = new DataManager({
       url: 'http://localhost:4400/',
@@ -37,5 +38,5 @@ export class AppComponent {
     });
     this.eventSettings = { dataSource: this.dataSource };
   }
-  public selectedDate: Date = new Date(2021, 1, 11);
+  public selectedDate: Date = new Date(2026, 1, 11);
 }
