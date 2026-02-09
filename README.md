@@ -1,10 +1,10 @@
 <!--
   howto.md
-  A step-by-step guide to integrate EJ2 Angular Scheduler with CRUD using GraphQl Adaptor.
+  A step-by-step guide to integrate EJ2 Angular Scheduler with CRUD using GraphQL Adaptor.
 -->
-# How to integrate EJ2 Angular Scheduler with CRUD using GraphQl Adaptor.
+# How to integrate EJ2 Angular Scheduler with CRUD using GraphQL Adaptor.
 
-This repository contains a sample full-stack application demonstrating how to show events in Syncfusion Angular Scheduler component using GraphQl. The Angular frontend provides a responsive UI for viewing and managing calendar events.
+This repository contains a sample full-stack application demonstrating how to show events in Syncfusion Angular Scheduler component using GraphQL. The Angular frontend provides a responsive UI for viewing and managing calendar events.
 
 
 ## Prerequisites
@@ -21,9 +21,9 @@ This repository contains a sample full-stack application demonstrating how to sh
 ### GraphQL Server setup
 
 ### Installation
-1. Open a terminal and navigate to the GraphQl folder
+1. Open a terminal and navigate to the GraphQLServer folder
     ```bash
-    cd GraphQl
+    cd GraphQLServer
     ```
 2. Install dependencies
     ```bash
@@ -34,9 +34,9 @@ This repository contains a sample full-stack application demonstrating how to sh
 
 ### Installation
 
-1. Open another terminal and navigate to the Schedule folder
+1. Open another terminal and navigate to the SchedulerApp folder
     ```bash
-    cd Schedule
+    cd SchedulerApp
     ```
 2. Install the required packages
     ```bash
@@ -44,18 +44,18 @@ This repository contains a sample full-stack application demonstrating how to sh
     ```
 
 ### Running the Application
-1. Open a terminal and navigate to GraphQl folder
+1. Open a terminal and navigate to GraphQLServer folder
       ```bash
-    cd GraphQl
+    cd GraphQLServer
     ```
-2. Start the GraphQl server:
+2. Start the GraphQL server:
     ```bash
     npm run dev
     ```
 3. Server started running on `http://localhost:4400`
-4. Open another terminal and Navigate to Schedule folder
+4. Open another terminal and Navigate to SchedulerApp folder
       ```bash
-    cd Schedule
+    cd SchedulerApp
     ```
 5. Start the Schedule Frontend:
     ```bash
