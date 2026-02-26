@@ -1,30 +1,18 @@
-input Sort {
-    name: String!
-    direction: String!
-}
-
-input Aggregate {
-    field: String!
-    type: String!
-}
 
 #Syncfusion DataManager query params
 
 input DataManager {
     skip: Int
     take: Int
-    sorted: [Sort]
     group: [String]
     table: String
     select: [String]
     where: String
     search: String
     requiresCounts: Boolean
-    aggregates: [Aggregate]
     params: String
 }
 
-# Schedule Appointment field names
 input AppointmentFields {
   Id: Int!
   Subject: String
@@ -36,6 +24,11 @@ input AppointmentFields {
   RecurrenceRule: String
   StartTimezone: String
   EndTimezone: String
+  RecurrenceID: Int
+  RecurrenceException: String
+  FollowingID: Int
+  IsReadonly:String
+  IsBlock:String
 }
 
 type Appointment {
@@ -48,6 +41,11 @@ type Appointment {
   RecurrenceRule: String
   StartTimezone: String
   EndTimezone: String
+  RecurrenceID: Int
+  RecurrenceException: String
+  FollowingID: Int
+  IsReadonly:String
+  IsBlock:String
 }
 
 type ReturnType {
@@ -55,9 +53,9 @@ type ReturnType {
 }
 
 type Query {
-  getEvents(datamanager: DataManager): ReturnType 
+  getEvents(datamanager: DataManager): ReturnType
 }
 
 type Mutation {
-  batchUpdate(added: [AppointmentFields], changed: [AppointmentFields], deleted: [AppointmentFields]): Appointment
+  batchUpdate(added: [AppointmentFields],changed: [AppointmentFields],deleted: [AppointmentFields]): [Appointment]
 }

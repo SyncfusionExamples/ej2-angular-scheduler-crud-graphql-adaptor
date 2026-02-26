@@ -14,76 +14,69 @@ const resolvers = {
     }
   },
   Mutation: {
-    batchUpdate: (parent, { added, changed, deleted }, context, info) => {
-      if (added && added.length > 0) {
-        console.log('added: ' + added.length);
-        added.forEach((order) => {
-          let existingIndex = -1;
-          for (let i = 0; i < eventsData.length; i++) {
-            if (sameId(eventsData[i].Id, order && order.Id)) {
-              existingIndex = i;
-              break;
+    batchUpdate: (argument, { added = [], changed = [], deleted = [] }) => {
+      for (const item of [...added, ...changed]) {
+        const id = item.Id;
+        const recId = item.RecurrenceID;
+        const start = item.StartTime;
+
+        const idx = eventsData.findIndex(e => sameId(e.Id, id));
+
+        if (idx === -1) {
+          if (recId) {
+            const parent = eventsData.find(p => sameId(p.Id, recId));
+            if (parent && start) {
+              const stamp = new Date(start).toISOString()
+                .replace(/[-:T.]/g, '')
+                .slice(0, 15) + 'Z';
+
+              let ex = (parent.RecurrenceException || '').split(',').filter(Boolean);
+              if (!ex.includes(stamp)) {
+                parent.RecurrenceException = ex.length ? ex.concat(stamp).join(',') : stamp;
+              }
             }
           }
-          if (existingIndex >= 0) {
-            const target = eventsData[existingIndex];
-            if ('Id' in order) target.Id = order.Id;
-            if ('Subject' in order) target.Subject = order.Subject;
-            if ('StartTime' in order) target.StartTime = order.StartTime;
-            if ('EndTime' in order) target.EndTime = order.EndTime;
-            if ('Location' in order) target.Location = order.Location;
-            if ('IsAllDay' in order) target.IsAllDay = order.IsAllDay;
-            if ('RecurrenceRule' in order) target.RecurrenceRule = order.RecurrenceRule;
-            if ('StartTimezone' in order) target.StartTimezone = order.StartTimezone;
-            if ('EndTimezone' in order) target.EndTimezone = order.EndTimezone;
-          } else {
-            eventsData.push(order);
-          }
-        });
-      }
-      if (changed && changed.length > 0) {
-        console.log('changed: ' + changed.length);
-        changed.forEach((order) => {
-          let target = null;
-          for (let i = 0; i < eventsData.length; i++) {
-            if (sameId(eventsData[i].Id, order && order.Id)) {
-              target = eventsData[i];
-              break;
+          eventsData.push({ ...item });
+          continue;
+        }
+
+        Object.assign(eventsData[idx], item);
+
+        if (eventsData[idx].RecurrenceID && eventsData[idx].StartTime) {
+          const parent = eventsData.find(p => sameId(p.Id, eventsData[idx].RecurrenceID));
+          if (parent) {
+            const stamp = new Date(eventsData[idx].StartTime).toISOString()
+              .replace(/[-:T.]/g, '')
+              .slice(0, 15) + 'Z';
+
+            let ex = (parent.RecurrenceException || '').split(',').filter(Boolean);
+            if (!ex.includes(stamp)) {
+              parent.RecurrenceException = ex.length ? ex.concat(stamp).join(',') : stamp;
             }
           }
-          if (!target) {
-            console.log('Change skipped: app not found for Id:', order && order.Id);
-            return;
-          }
-          if ('Id' in order) target.Id = order.Id;
-          if ('Subject' in order) target.Subject = order.Subject;
-          if ('StartTime' in order) target.StartTime = order.StartTime;
-          if ('EndTime' in order) target.EndTime = order.EndTime;
-          if ('Location' in order) target.Location = order.Location;
-          if ('IsAllDay' in order) target.IsAllDay = order.IsAllDay;
-          if ('RecurrenceRule' in order) target.RecurrenceRule = order.RecurrenceRule;
-          if ('StartTimezone' in order) target.StartTimezone = order.StartTimezone;
-          if ('EndTimezone' in order) target.EndTimezone = order.EndTimezone;
-        });
+        }
       }
-      if (deleted && deleted.length > 0) {
-        console.log('deleted: ' + deleted.length);
-        deleted.forEach((order) => {
-          const eventID = (order && typeof order === 'object') ? order.Id : order;
-          let idx = -1;
-          for (let i = 0; i < eventsData.length; i++) {
-            if (sameId(eventsData[i].Id, eventID)) {
-              idx = i;
-              break;
+      for (const item of deleted) {
+        let id = (typeof item === 'object' && item !== null) ? item.Id : item;
+        if (!id) continue;
+
+        const isOccurrenceDelete = (typeof item === 'object' && !!item.RecurrenceID);
+
+        if (isOccurrenceDelete) {
+          const idx = eventsData.findIndex(e => sameId(e.Id, id));
+          if (idx !== -1) eventsData.splice(idx, 1);
+        } else {
+
+          for (let i = eventsData.length - 1; i >= 0; i--) {
+            const ev = eventsData[i];
+            if (sameId(ev.Id, id) || sameId(ev.RecurrenceID, id)) {
+              eventsData.splice(i, 1);
             }
           }
-          if (idx === -1) {
-            console.log("Delete skipped: app not found.", eventID);
-            return;
-          }
-          eventsData.splice(idx, 1);
-        });
+        }
       }
+
+      return eventsData;
     }
   }
 };
